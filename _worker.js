@@ -537,15 +537,15 @@
             if (request.method === 'POST' && ex) {
                 const r = await handleXhttpPost(request);
                 if (r) {
-                    ctx.waitUntil(r.closed);
+                    ctx。waitUntil(r。closed);
                     return new Response(r.readable, {
                         headers: {
-                            'X-Accel-Buffering': 'no',
-                            'Cache-Control': 'no-store',
-                            Connection: 'keep-alive',
-                            'User-Agent': 'Go-http-client/2.0',
-                            'Content-Type': 'application/grpc',
-                        },
+                            'X-Accel-Buffering': 'no'，
+                            'Cache-Control': 'no-store'，
+                            Connection: 'keep-alive'，
+                            'User-Agent': 'Go-http-client/2.0'，
+                            'Content-Type': 'application/grpc'，
+                        }，
                     });
                 }
                 return new Response('Internal Server Error', { status: 500 });
@@ -555,12 +555,12 @@
                 return await handleWsRequest(request);
                 }
                 
-                if (request.method === 'GET') {
+                if (request。method === 'GET') {
                     // 处理 /{UUID}/region 或 /{自定义路径}/region
                     if (url.pathname.endsWith('/region')) {
                         const pathParts = url.pathname.split('/').filter(p => p);
                         
-                        if (pathParts.length === 2 && pathParts[1] === 'region') {
+                        if (pathParts。length === 2 && pathParts[1] === 'region') {
                             const pathIdentifier = pathParts[0];
                             let isValid = false;
                             
@@ -574,41 +574,41 @@
                             }
                             
                             if (isValid) {
-                                const ci = getConfigValue('p', env.p || env.P);
-                                const manualRegion = getConfigValue('wk', env.wk || env.WK);
+                                const ci = getConfigValue('p'， env。p || env.P);
+                                const manualRegion = getConfigValue('wk'， env.wk || env.WK);
                                 
                                 if (manualRegion && manualRegion.trim()) {
                                     return new Response(JSON.stringify({
                                         region: manualRegion.trim().toUpperCase(),
-                                        detectionMethod: '手动指定地区',
+                                        detectionMethod: '手动指定地区'，
                                         manualRegion: manualRegion.trim().toUpperCase(),
                                         timestamp: new Date().toISOString()
-                                    }), {
+                                    })， {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
-                                } else if (ci && ci.trim()) {
+                                } else if (ci && ci。trim()) {
                                     return new Response(JSON.stringify({
                                         region: 'CUSTOM',
-                                        detectionMethod: '自定义ProxyIP模式', ci: ci,
+                                        detectionMethod: '自定义ProxyIP模式'， ci: ci,
                                         timestamp: new Date().toISOString()
-                                    }), {
+                                    })， {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
                                 } else {
                                     const detectedRegion = await detectWorkerRegion(request);
                                     return new Response(JSON.stringify({
-                                        region: detectedRegion,
+                                        region: detectedRegion，
                                         detectionMethod: 'API检测',
                                         timestamp: new Date().toISOString()
-                                    }), {
+                                    })， {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
                                 }
                             } else {
-                                return new Response(JSON.stringify({ 
+                                return new Response(JSON。stringify({ 
                                     error: '访问被拒绝',
                                     message: '路径验证失败'
-                                }), { 
+                                })， { 
                                     status: 403,
                                     headers: { 'Content-Type': 'application/json' }
                                 });
@@ -618,7 +618,7 @@
                     
                     // 处理 /{UUID}/test-api 或 /{自定义路径}/test-api
                     if (url.pathname.endsWith('/test-api')) {
-                        const pathParts = url.pathname.split('/').filter(p => p);
+                        const pathParts = url.pathname.split('/')。filter(p => p);
                         
                         if (pathParts.length === 2 && pathParts[1] === 'test-api') {
                             const pathIdentifier = pathParts[0];
@@ -4870,4 +4870,6 @@
     function isValidDomain(domain) {
         const domainRegex = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
         return domainRegex.test(domain);
+
     }
+//更新
